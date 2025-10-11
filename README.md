@@ -4,6 +4,8 @@ Download node.js from https://nodejs.org/en/download.
 
 Run database script found in /scripts to create database for this application on local machine.
 
+Create .env file and add the database connection statements + jwt_secret token inside.
+
 ["npm run dev"] in terminal to open app.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the app.
