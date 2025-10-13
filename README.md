@@ -1,4 +1,4 @@
-SQL Injection proof of concept with paremeterized sql stamements and jwt {JSON web token) login sessions.
+SQL Injection proof of concept with non paremeterized sql stamements and jwt {JSON web token) login sessions.
 
 Download node.js from https://nodejs.org/en/download.
 

@@ -10,17 +10,18 @@ export async function POST(req) {
     }
 
     const db = await createConnection();
-    const [rows] = await db.execute('SELECT id, username, password FROM users WHERE username = ?', [username]);
+    const [rows] = await db.execute(`SELECT id, username, password FROM users WHERE username = '${username}' AND password = '${password}'`);
 
     if (!rows.length) {
       return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 });
     }
 
     const user = rows[0];
-    const match = (password === user.password);
-    if (!match) {
-      return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 });
-    }
+    // const match = (password === user.password);
+    // if (!match) {
+    //   return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 });
+    // } 
+    // password matching disabled for making sql injection possible for poC purposes
 
     const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '2h' });
 
