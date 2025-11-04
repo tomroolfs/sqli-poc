@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: nextjs_app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    # ✅ This is the critical line that ensures the DB is healthy before 'web' starts
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - nginx_net
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sqli-poc
+      MYSQL_USER: sqli_user
+      MYSQL_PASSWORD: sqli_pass
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - nginx_net
+    # ✅ This defines the health check for the DB service
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  nginx_net:
+
+volumes:
+  db_data: {}
