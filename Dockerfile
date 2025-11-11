@@ -23,7 +23,7 @@ COPY --from=base /app/public ./public
 # REMOVED: COPY wait-for-db.sh ./wait-for-db.sh
 # REMOVED: RUN chmod +x wait-for-db.sh
 
-EXPOSE 3000
+EXPOSE 3001
 
 # Run app after DB is ready (guaranteed by docker-compose depends_on)
 CMD ["npm", "start"]
