@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   web:
     build: .
@@ -8,7 +6,6 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    # ✅ This is the critical line that ensures the DB is healthy before 'web' starts
     depends_on:
       db:
         condition: service_healthy
@@ -29,7 +26,6 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - nginx_net
-    # ✅ This defines the health check for the DB service
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
